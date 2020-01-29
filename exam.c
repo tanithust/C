@@ -10,6 +10,19 @@ typedef struct
     char groupid[20];
     inputTeam team[4];
 }group;
+void swapstruct(inputTeam *a, inputTeam *b)
+{
+    inputTeam c;
+    strcpy(c.teamname,a->teamname);
+    c.point = a->point;
+    c.goal = a->goal;
+    strcpy(a->teamname,b->teamname);
+    a->point = b->point;
+    a->goal = b->goal;
+    strcpy(b->teamname,c.teamname);
+    b->point=c.point;
+    b->goal = c.goal;
+}
 int main()
 {
     int i,n,j,choice,totalgroup,k,goal1,goal2;
@@ -76,7 +89,7 @@ int main()
                 printf("%s \t %d \t %d \n",asiacup[i].team[j].teamname,asiacup[i].team[j].point,asiacup[i].team[j].goal);
             }
             goto mainmenu;
-        case 3 :
+        case 3 : // find team
             printf("enter name of the team :");
             getchar();
             gets(findteam);
@@ -95,6 +108,31 @@ int main()
                     }
                 }
             break;  
+        case 5: // sort team
+            for(i=0;i<totalgroup;i++)
+            {
+                for(j=0;j<4;j++)
+                {
+                    for(k=j+1;k<4;k++)
+                    {
+                        if(asiacup[i].team[j].point<asiacup[i].team[k].point)
+                        swapstruct(&asiacup[i].team[j],&asiacup[i].team[k]);
+                        else
+                        {
+                            if (asiacup[i].team[j].point==asiacup[i].team[k].point)
+                            {
+                                if(asiacup[i].team[j].goal<asiacup[i].team[k].goal)
+                                swapstruct(&asiacup[i].team[j],&asiacup[i].team[k]);
+                            }
+                        }
+                    }
+                }
+            }
+            goto mainmenu;
+            case 4:
+            break;
+            case 6:
+            break;    
         }  
     }
 }     
